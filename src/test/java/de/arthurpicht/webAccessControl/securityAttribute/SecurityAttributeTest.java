@@ -8,6 +8,12 @@ import static org.junit.jupiter.api.Assertions.*;
 class SecurityAttributeTest {
 
     private static class TestUser extends User {
+
+        @Override
+        public String getRoleName() {
+            return "TEST_USER_ROLE";
+        }
+
         @Override
         public String getUserId() {
             return "TEST_USER_ID";
@@ -23,10 +29,9 @@ class SecurityAttributeTest {
         assertTrue(securityAttribute.isValid());
         assertFalse(securityAttribute.isIntermediate());
         assertEquals(
-                "de.arthurpicht.webAccessControl.securityAttribute.SecurityAttributeTest.TestUser",
-                securityAttribute.getRoleClassName());
-        assertTrue(securityAttribute.isInRoleByClassName(
-                "de.arthurpicht.webAccessControl.securityAttribute.SecurityAttributeTest.TestUser"));
+                TestUser.class,
+                securityAttribute.getRole());
+        assertTrue(securityAttribute.isInRole(TestUser.class));
         assertEquals(testUser, securityAttribute.getUser());
     }
 

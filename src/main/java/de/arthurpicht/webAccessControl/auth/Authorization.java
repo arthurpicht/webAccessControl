@@ -16,7 +16,6 @@ public class Authorization {
     protected String sessionId;
     protected SecurityAttribute securityAttribute;
 
-
     public Authorization(HttpServletRequest httpServletRequest) throws UnauthorizedException {
         if (!sessionManager.hasSessionInAnyStaging(httpServletRequest))
             throw new UnauthorizedException("[Authentication] failed: No running session.");
@@ -51,11 +50,11 @@ public class Authorization {
     }
 
     public boolean isInRole(String roleName) {
-        if (!roleRegistry.hasRoleByName(roleName))
-            throw new IllegalArgumentException("No role found for name [" + roleName + "].");
+        if (!roleRegistry.hasRole(roleName))
+            throw new IllegalArgumentException("No role registered for name [" + roleName + "].");
 
-        String className = roleRegistry.getClassName(roleName);
-        return this.securityAttribute.isInRoleByClassName(className);
+        Class<? extends User> registeredRole = roleRegistry.getRole(roleName);
+        return isInRole(registeredRole);
     }
 
     public boolean isInRole(Class<? extends User> userClass) {
@@ -67,8 +66,8 @@ public class Authorization {
     }
 
     public String getRoleName() {
-        String roleClassName = this.securityAttribute.getRoleClassName();
-        return roleRegistry.getRoleName(roleClassName);
+        Class<? extends User>  role = this.securityAttribute.getRole();
+        return roleRegistry.getRoleName(role);
     }
 
 }

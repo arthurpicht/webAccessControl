@@ -43,17 +43,6 @@ public class SessionManagerHttp extends SessionManager {
     }
 
     @Override
-    public void invalidatePreexisting(HttpServletRequest httpServletRequest) {
-        HttpSession httpSession = httpServletRequest.getSession(false);
-        if (httpSession != null) {
-            SecurityAttribute securityAttribute = getSecurityAttribute(httpServletRequest);
-            User user = securityAttribute.getUser();
-            httpSession.invalidate();
-            authLogger.info("[" + user.getUserId() + "] logout");
-        }
-    }
-
-    @Override
     public SecurityAttribute getSecurityAttribute(HttpServletRequest httpServletRequest) {
         HttpSession httpSession = HttpSessions.getRunningSession(httpServletRequest);
         SecurityAttribute securityAttribute = (SecurityAttribute) httpSession.getAttribute(ATTRIBUTE_NAME);

@@ -1,61 +1,65 @@
 package de.arthurpicht.webAccessControl.handler;
 
 import de.arthurpicht.utils.core.collection.Maps;
+import de.arthurpicht.webAccessControl.securityAttribute.User;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public final class RoleRegistry {
 
-    private final Map<String, String> roleRegistryMap;
+    private final Map<String, Class<? extends User>> roleRegistryMap;
 
-    public RoleRegistry(Map<String, String> roleRegistryMap) {
+    public RoleRegistry(Map<String, Class<? extends User>> roleRegistryMap) {
         this.roleRegistryMap = roleRegistryMap;
     }
 
-    public boolean hasRoleByName(String roleName) {
+    public boolean hasRole(String roleName) {
         return this.roleRegistryMap.containsKey(roleName);
     }
 
-    public String getClassName(String roleName) {
+    public Class<? extends User> getRole(String roleName) {
+        if (!this.roleRegistryMap.containsKey(roleName))
+            throw new IllegalArgumentException("Role with name [" + roleName + "] not contained in "
+                    + RoleRegistry.class.getSimpleName() + ".");
+
         return this.roleRegistryMap.get(roleName);
     }
 
-    public String getRoleName(String className) {
-        if (!this.roleRegistryMap.containsValue(className))
-            throw new IllegalArgumentException("Role class [" + className + "] not contained in "
-                    + RoleRegistry.class.getSimpleName());
+    public String getRoleName(Class<? extends User> roleClass) {
+        if (!this.roleRegistryMap.containsValue(roleClass))
+            throw new IllegalArgumentException("Role class [" + roleClass.getCanonicalName() + "] not contained in "
+                    + RoleRegistry.class.getSimpleName() + ".");
         //noinspection OptionalGetWithoutIsPresent
         return this.roleRegistryMap
                 .entrySet()
                 .stream()
-                .filter(entry -> className.equals(entry.getValue()))
+                .filter(entry -> entry.getValue().getCanonicalName().equals(roleClass.getCanonicalName()))
                 .findFirst()
                 .get()
-                .getValue();
+                .getKey();
     }
 
     public static class Builder {
 
-        private final Map<String, String> roleRegistryMap;
+        private final Map<String, Class<? extends User>> roleRegistryMap;
 
         public Builder() {
             this.roleRegistryMap = new HashMap<>();
         }
 
-        public Builder add(String roleName, Class<?> roleClass) {
+        public Builder add(String roleName, Class<? extends User> roleClass) {
             if (roleRegistryMap.containsKey(roleName)) {
                 throw new IllegalArgumentException(
                         "Role name [" + roleName + "] is already contained by "
                                 + RoleRegistry.class.getSimpleName() + ".");
             }
-            String className = roleClass.getCanonicalName();
-            if (roleRegistryMap.containsValue(className))
+            if (roleRegistryMap.containsValue(roleClass))
                 throw new IllegalArgumentException(
-                        "Role class [" + className + "] is already contained by "
+                        "Role class [" + roleClass.getCanonicalName() + "] is already contained by "
                                 + RoleRegistry.class.getSimpleName() + ".");
 
-            this.roleRegistryMap.put(roleName, className);
+            this.roleRegistryMap.put(roleName, roleClass);
 
             return this;
         }

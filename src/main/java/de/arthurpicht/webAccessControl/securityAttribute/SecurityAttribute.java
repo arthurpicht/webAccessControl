@@ -3,6 +3,7 @@ package de.arthurpicht.webAccessControl.securityAttribute;
 import de.arthurpicht.webAccessControl.securityAttribute.requirements.Requirements;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import static de.arthurpicht.utils.core.assertion.MethodPreconditions.assertArgumentNotNull;
 
@@ -39,12 +40,24 @@ public class SecurityAttribute implements Serializable {
         return this.staging.isIntermediate();
     }
 
-    public String getRoleClassName() {
-        return this.user.getClass().getCanonicalName();
+    public Class<? extends User> getRole() {
+        return this.user.getClass();
     }
 
-    public boolean isInRoleByClassName(String className) {
-        return getRoleClassName().equals(className);
+    public boolean isInRole(Class<? extends User> role) {
+        return this.user.getClass().getCanonicalName().equals(role.getCanonicalName());
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SecurityAttribute that = (SecurityAttribute) o;
+        return user.equals(that.user);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(user);
+    }
 }

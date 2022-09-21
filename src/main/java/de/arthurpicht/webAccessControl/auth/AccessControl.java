@@ -5,6 +5,7 @@ import de.arthurpicht.webAccessControl.WACContext;
 import de.arthurpicht.webAccessControl.WACContextRegistry;
 import de.arthurpicht.webAccessControl.handler.LoginHandler;
 import de.arthurpicht.webAccessControl.securityAttribute.SecurityAttribute;
+import de.arthurpicht.webAccessControl.securityAttribute.User;
 import de.arthurpicht.webAccessControl.sessionManager.SessionManager;
 import org.slf4j.Logger;
 
@@ -53,7 +54,10 @@ public class AccessControl {
         assertArgumentNotNull("httpServletRequest", httpServletRequest);
 
         if (sessionManager.hasSessionInAnyStaging(httpServletRequest)) {
-            sessionManager.invalidatePreexisting(httpServletRequest);
+            SecurityAttribute securityAttribute = sessionManager.getSecurityAttribute(httpServletRequest);
+            User user = securityAttribute.getUser();
+            sessionManager.invalidate(httpServletRequest);
+            authLogger.info("[" + user.getUserId() + "] logout");
         } else {
             authLogger.debug("Logout without running session.");
         }
