@@ -1,4 +1,4 @@
-package de.arthurpicht.webAccessControl._integrationTest;
+package de.arthurpicht.webAccessControl.authorization;
 
 import de.arthurpicht.webAccessControl.WACContext;
 import de.arthurpicht.webAccessControl.WACContextRegistry;
@@ -6,7 +6,7 @@ import de.arthurpicht.webAccessControl._integrationTest.globalStubs.HttpServletR
 import de.arthurpicht.webAccessControl._integrationTest.globalStubs.SessionManagerStubAbstractFactory;
 import de.arthurpicht.webAccessControl._integrationTest.roles.RoleA;
 import de.arthurpicht.webAccessControl._integrationTest.roles.RoleB;
-import de.arthurpicht.webAccessControl._integrationTest.testCases.LoginHandlerStubAbstractFactory;
+import de.arthurpicht.webAccessControl._integrationTest.testCases.LoginHandlerStubValidFactory;
 import de.arthurpicht.webAccessControl.auth.Authorization;
 import de.arthurpicht.webAccessControl.auth.UnauthorizedException;
 import de.arthurpicht.webAccessControl.handler.LoginHandler;
@@ -37,7 +37,7 @@ public class AuthorizationValidTest {
         WACContext context = new WACContext(
                 logger,
                 roleRegistry,
-                new LoginHandlerStubAbstractFactory(),
+                new LoginHandlerStubValidFactory(),
                 new SessionManagerStubAbstractFactory()
         );
 
@@ -59,7 +59,7 @@ public class AuthorizationValidTest {
     }
 
     @Test
-    public void getSessionId() throws UnauthorizedException {
+    public void getSessionId() {
         assertEquals("test-user-1_session" , authorization.getSessionId());
     }
 

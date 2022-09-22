@@ -7,12 +7,14 @@ import de.arthurpicht.webAccessControl.securityAttribute.SecurityAttribute;
 import de.arthurpicht.webAccessControl.securityAttribute.User;
 import de.arthurpicht.webAccessControl.securityAttribute.requirements.Requirements;
 
-public class LoginHandlerStub extends LoginHandler {
+public class LoginHandlerStubIntermediate extends LoginHandler {
 
     @Override
     public SecurityAttribute checkCredentials(String username, char[] password) throws UnauthorizedException {
         User user = new RoleA("test-user-1");
         Requirements requirements = new Requirements();
+        requirements.add2FARequirement();
+        requirements.addPolicyConsentRequirement();
 
         return new SecurityAttribute(user, requirements);
     }

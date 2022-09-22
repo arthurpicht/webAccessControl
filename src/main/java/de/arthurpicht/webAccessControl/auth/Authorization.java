@@ -4,6 +4,7 @@ import de.arthurpicht.webAccessControl.WACContextRegistry;
 import de.arthurpicht.webAccessControl.handler.RoleRegistry;
 import de.arthurpicht.webAccessControl.securityAttribute.SecurityAttribute;
 import de.arthurpicht.webAccessControl.securityAttribute.User;
+import de.arthurpicht.webAccessControl.securityAttribute.requirements.Requirement;
 import de.arthurpicht.webAccessControl.sessionManager.SessionManager;
 
 import javax.servlet.http.HttpServletRequest;
@@ -44,9 +45,9 @@ public class Authorization {
         return this.securityAttribute.getUser();
     }
 
-    public String getNextRequirement() {
+    public Requirement getNextRequirement() {
         if (!isIntermediate()) throw new IllegalStateException("Wrong staging: [INTERMEDIATE] is expected.");
-        return this.securityAttribute.getStaging().getRequirements().getNextRequirementAsString();
+        return this.securityAttribute.getStaging().getRequirements().getNextRequirement();
     }
 
     public boolean isInRole(String roleName) {
