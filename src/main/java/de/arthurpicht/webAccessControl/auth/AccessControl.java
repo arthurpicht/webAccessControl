@@ -1,7 +1,6 @@
 package de.arthurpicht.webAccessControl.auth;
 
 import de.arthurpicht.utils.core.strings.Strings;
-import de.arthurpicht.webAccessControl.WACContext;
 import de.arthurpicht.webAccessControl.WACContextRegistry;
 import de.arthurpicht.webAccessControl.handler.LoginHandler;
 import de.arthurpicht.webAccessControl.securityAttribute.SecurityAttribute;
@@ -16,9 +15,9 @@ import static de.arthurpicht.utils.core.assertion.MethodPreconditions.assertArgu
 
 public class AccessControl {
 
-    private static final WACContext WAC_CONTEXT = WACContextRegistry.getContext();
-    private static final Logger authLogger = WAC_CONTEXT.getLogger();
-    private static final SessionManager sessionManager = WAC_CONTEXT.getSessionManager();
+    private static final Logger authLogger = WACContextRegistry.getContext().getLogger();
+    private static final SessionManager sessionManager = WACContextRegistry.getContext().getSessionManager();
+    private static final LoginHandler loginHandler = WACContextRegistry.getContext().createLoginHandler();
 
     public static void login(HttpServletRequest httpServletRequest, String username, char[] password)
             throws UnauthorizedException {
@@ -28,7 +27,6 @@ public class AccessControl {
 
         sessionManager.invalidate(httpServletRequest);
 
-        LoginHandler loginHandler = WAC_CONTEXT.createLoginHandler();
         SecurityAttribute securityAttribute = loginHandler.checkCredentials(username, password);
 
         sessionManager.createSession(httpServletRequest, securityAttribute);
@@ -42,7 +40,6 @@ public class AccessControl {
 
         sessionManager.invalidate(httpServletRequest);
 
-        LoginHandler loginHandler = WAC_CONTEXT.createLoginHandler();
         SecurityAttribute securityAttribute = loginHandler.checkCredentials(accessKey);
 
         sessionManager.createSession(httpServletRequest, securityAttribute);
@@ -75,6 +72,7 @@ public class AccessControl {
     }
 
     public static Authorization assertValidSession(Set<String> roleNames, HttpServletRequest httpServletRequest) throws UnauthorizedException {
+        assertArgumentNotNull("roleNames", roleNames);
         assertArgumentNotNull("httpServletRequest", httpServletRequest);
 
         Authorization authorization = new Authorization(httpServletRequest);
@@ -82,7 +80,7 @@ public class AccessControl {
             throw new UnauthorizedException("Session not valid.");
         if (!roleNames.contains(authorization.getRoleName()))
             throw new UnauthorizedException("User not in one of that roles: "
-                    + Strings.listing(roleNames, ",", "[", "]") + ".");
+                    + Strings.listing(roleNames, ", ", "[", "]") + ".");
         return authorization;
     }
 

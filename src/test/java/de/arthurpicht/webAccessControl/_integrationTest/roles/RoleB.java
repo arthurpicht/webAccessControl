@@ -2,7 +2,9 @@ package de.arthurpicht.webAccessControl._integrationTest.roles;
 
 import de.arthurpicht.webAccessControl.securityAttribute.User;
 
-public class RoleB extends User {
+import java.io.Serializable;
+
+public class RoleB extends User implements Serializable {
 
     public static final String ROLE_NAME = "ROLE_B";
 

@@ -6,7 +6,7 @@ import de.arthurpicht.webAccessControl._integrationTest.globalStubs.HttpServletR
 import de.arthurpicht.webAccessControl._integrationTest.globalStubs.SessionManagerStubAbstractFactory;
 import de.arthurpicht.webAccessControl._integrationTest.roles.RoleA;
 import de.arthurpicht.webAccessControl._integrationTest.roles.RoleB;
-import de.arthurpicht.webAccessControl._integrationTest.testCases.LoginHandlerStubIntermediateFactory;
+import de.arthurpicht.webAccessControl._integrationTest.loginHandler.LoginHandlerStubIntermediateFactory;
 import de.arthurpicht.webAccessControl.auth.Authorization;
 import de.arthurpicht.webAccessControl.auth.UnauthorizedException;
 import de.arthurpicht.webAccessControl.handler.LoginHandler;

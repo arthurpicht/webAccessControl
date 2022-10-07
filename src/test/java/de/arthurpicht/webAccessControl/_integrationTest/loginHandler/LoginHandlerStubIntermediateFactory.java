@@ -1,4 +1,4 @@
-package de.arthurpicht.webAccessControl._integrationTest.testCases;
+package de.arthurpicht.webAccessControl._integrationTest.loginHandler;
 
 import de.arthurpicht.webAccessControl.handler.LoginHandler;
 import de.arthurpicht.webAccessControl.handler.LoginHandlerAbstractFactory;
