@@ -13,7 +13,13 @@ public class SessionManagerHttp extends SessionManager {
 
     @Override
     public void createSession(HttpServletRequest httpServletRequest, SecurityAttribute securityAttribute) {
-        HttpSession httpSession = httpServletRequest.getSession(true);
+        HttpSession httpSession = HttpSessions.createSession(httpServletRequest);
+        httpSession.setAttribute(ATTRIBUTE_NAME, securityAttribute);
+    }
+
+    @Override
+    public void updateSession(HttpServletRequest httpServletRequest, SecurityAttribute securityAttribute) {
+        HttpSession httpSession = HttpSessions.getRunningSession(httpServletRequest);
         httpSession.setAttribute(ATTRIBUTE_NAME, securityAttribute);
     }
 

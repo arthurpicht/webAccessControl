@@ -22,6 +22,15 @@ public class SessionManagerStub extends SessionManager {
     }
 
     @Override
+    public void updateSession(HttpServletRequest httpServletRequest, SecurityAttribute securityAttribute) {
+        HttpServletRequestStub httpServletRequestStub = cast(httpServletRequest);
+        String userId = httpServletRequestStub.getUserId();
+        if (!hasSessionInAnyStaging(httpServletRequest))
+            throw new IllegalStateException("No running session for user: " + userId);
+        securityAttributeMap.put(userId, securityAttribute);
+    }
+
+    @Override
     public boolean hasSessionInAnyStaging(HttpServletRequest httpServletRequest) {
         HttpServletRequestStub httpServletRequestStub = cast(httpServletRequest);
         return securityAttributeMap.containsKey(httpServletRequestStub.getUserId());

@@ -8,6 +8,8 @@ public abstract class SessionManager {
 
     public abstract void createSession(HttpServletRequest httpServletRequest, SecurityAttribute securityAttribute);
 
+    public abstract void updateSession(HttpServletRequest httpServletRequest, SecurityAttribute securityAttribute);
+
     public abstract boolean hasSessionInAnyStaging(HttpServletRequest httpServletRequest);
 
     public abstract boolean hasValidSession(HttpServletRequest httpServletRequest);

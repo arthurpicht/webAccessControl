@@ -22,4 +22,9 @@ public class LoginHandlerStubValid extends LoginHandler {
         throw new RuntimeException("Intentionally not implemented.");
     }
 
+    @Override
+    public SecurityAttribute refreshSecurityAttribute(SecurityAttribute securityAttribute) {
+        throw new RuntimeException("Intentionally not implemented.");
+    }
+
 }

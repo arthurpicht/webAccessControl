@@ -5,6 +5,10 @@ import javax.servlet.http.HttpSession;
 
 public class HttpSessions {
 
+    public static HttpSession createSession(HttpServletRequest httpServletRequest) {
+        return httpServletRequest.getSession(true);
+    }
+
     public static boolean hasRunningSession(HttpServletRequest httpServletRequest) {
         HttpSession httpSession = httpServletRequest.getSession(false);
         return httpSession != null;

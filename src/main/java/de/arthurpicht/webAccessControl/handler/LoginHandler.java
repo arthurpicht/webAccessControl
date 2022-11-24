@@ -9,5 +9,7 @@ public abstract class LoginHandler {
 
     public abstract SecurityAttribute checkCredentials(String accessKey) throws UnauthorizedException;
 
+    public abstract SecurityAttribute refreshSecurityAttribute(SecurityAttribute securityAttribute);
+
 
 }
