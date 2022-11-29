@@ -2,12 +2,12 @@ package de.arthurpicht.webAccessControl.securityAttribute.requirements;
 
 import java.io.Serializable;
 
-public class RenewPWRequirement implements Requirement, Serializable {
+public final class RenewPWRequirement extends Requirement implements Serializable {
 
     private static final long serialVersionUID = 6297658560168555958L;
 
-    @Override
-    public String getName() {
-        return "RENEW_PASSWORD";
+    public RenewPWRequirement() {
+        super("RENEW_PASSWORD");
     }
+
 }

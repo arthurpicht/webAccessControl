@@ -2,13 +2,14 @@ package de.arthurpicht.webAccessControl.securityAttribute.requirements;
 
 import java.io.Serializable;
 
-public class EmailConfirmationRequirement implements Requirement, Serializable {
+public final class EmailConfirmationRequirement extends Requirement implements Serializable {
 
     private static final long serialVersionUID = -8907803714615755199L;
     private final String token;
     private final String code;
 
     public EmailConfirmationRequirement(String token, String code) {
+        super("EMAIL_CONFIRMATION");
         this.token = token;
         this.code = code;
     }
@@ -19,11 +20,6 @@ public class EmailConfirmationRequirement implements Requirement, Serializable {
 
     public String getCode() {
         return code;
-    }
-
-    @Override
-    public String getName() {
-        return "EMAIL_CONFIRMATION";
     }
 
 }

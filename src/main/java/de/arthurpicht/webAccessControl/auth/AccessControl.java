@@ -5,6 +5,7 @@ import de.arthurpicht.webAccessControl.WACContextRegistry;
 import de.arthurpicht.webAccessControl.handler.LoginHandler;
 import de.arthurpicht.webAccessControl.securityAttribute.SecurityAttribute;
 import de.arthurpicht.webAccessControl.securityAttribute.User;
+import de.arthurpicht.webAccessControl.securityAttribute.requirements.Requirement;
 import de.arthurpicht.webAccessControl.sessionManager.SessionManager;
 import org.slf4j.Logger;
 
@@ -58,6 +59,20 @@ public class AccessControl {
         } else {
             authLogger.debug("Logout without running session.");
         }
+    }
+
+    public static void updateSession(HttpServletRequest httpServletRequest) {
+        assertArgumentNotNull("httpServletRequest", httpServletRequest);
+
+        if (sessionManager.hasIntermediateSession(httpServletRequest)) {
+            SecurityAttribute securityAttributePre = sessionManager.getSecurityAttribute(httpServletRequest);
+            SecurityAttribute securityAttributeNew = loginHandler.refreshSecurityAttribute(securityAttributePre);
+            sessionManager.updateSession(httpServletRequest, securityAttributeNew);
+        } else {
+            throw new IllegalStateException("No intermediate session found for marking " +
+                    "specified requirement as fulfilled.");
+        }
+
     }
 
     public static Authorization assertValidSession(String roleName, HttpServletRequest httpServletRequest) throws UnauthorizedException {
