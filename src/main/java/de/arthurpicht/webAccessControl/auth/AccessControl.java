@@ -32,7 +32,7 @@ public class AccessControl {
 
         sessionManager.createSession(httpServletRequest, securityAttribute);
 
-        authLogger.info("user [" + username + "] login. ");
+        authLogger.info("user [" + username + "] login. Staging: " + securityAttribute.getStaging());
     }
 
     public static void loginWithAccessKey(HttpServletRequest httpServletRequest, String accessKey) throws UnauthorizedException {
