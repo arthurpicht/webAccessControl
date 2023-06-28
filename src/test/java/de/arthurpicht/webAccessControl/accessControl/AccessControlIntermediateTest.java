@@ -9,13 +9,9 @@ import de.arthurpicht.webAccessControl._integrationTest.loginHandler.LoginHandle
 import de.arthurpicht.webAccessControl._integrationTest.roles.RoleA;
 import de.arthurpicht.webAccessControl._integrationTest.roles.RoleB;
 import de.arthurpicht.webAccessControl.auth.AccessControl;
-import de.arthurpicht.webAccessControl.auth.Authorization;
 import de.arthurpicht.webAccessControl.auth.UnauthorizedException;
-import de.arthurpicht.webAccessControl.handler.LoginHandler;
 import de.arthurpicht.webAccessControl.handler.RoleRegistry;
-import de.arthurpicht.webAccessControl.securityAttribute.SecurityAttribute;
 import de.arthurpicht.webAccessControl.sessionManager.SessionManager;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
@@ -29,6 +25,7 @@ public class AccessControlIntermediateTest {
 
     @BeforeAll
     public static void init() {
+        WACContextRegistry.reset();
         Logger logger = LoggerFactory.getLogger("IntegrationTest");
         RoleRegistry roleRegistry = new RoleRegistry.Builder()
                 .add(RoleA.ROLE_NAME, RoleA.class)

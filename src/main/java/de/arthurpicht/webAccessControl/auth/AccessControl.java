@@ -5,7 +5,6 @@ import de.arthurpicht.webAccessControl.WACContextRegistry;
 import de.arthurpicht.webAccessControl.handler.LoginHandler;
 import de.arthurpicht.webAccessControl.securityAttribute.SecurityAttribute;
 import de.arthurpicht.webAccessControl.securityAttribute.User;
-import de.arthurpicht.webAccessControl.securityAttribute.requirements.Requirement;
 import de.arthurpicht.webAccessControl.sessionManager.SessionManager;
 import org.slf4j.Logger;
 
@@ -14,6 +13,7 @@ import java.util.Set;
 
 import static de.arthurpicht.utils.core.assertion.MethodPreconditions.assertArgumentNotNull;
 
+@SuppressWarnings("unused")
 public class AccessControl {
 
     private static final Logger authLogger = WACContextRegistry.getContext().getLogger();

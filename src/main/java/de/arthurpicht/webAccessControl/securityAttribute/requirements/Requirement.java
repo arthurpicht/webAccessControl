@@ -1,7 +1,5 @@
 package de.arthurpicht.webAccessControl.securityAttribute.requirements;
 
-import de.arthurpicht.utils.core.assertion.MethodPreconditions;
-
 import java.io.Serializable;
 import java.util.Objects;
 

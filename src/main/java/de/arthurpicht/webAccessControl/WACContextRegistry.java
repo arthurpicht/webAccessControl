@@ -6,14 +6,24 @@ public class WACContextRegistry {
 
     private static WACContext WACContext = null;
 
-    public static void initialize(WACContext WACContext) {
+    public static synchronized void initialize(WACContext WACContext) {
         assertArgumentNotNull("context", WACContext);
+        if (WACContextRegistry.WACContext != null)
+            throw new IllegalStateException(WACContext.class.getSimpleName() + " already initialized in "
+                    + WACContextRegistry.class.getSimpleName() + ".");
         WACContextRegistry.WACContext = WACContext;
     }
 
-    public static WACContext getContext() {
+    public static synchronized WACContext getContext() {
         assertInitialized();
         return WACContext;
+    }
+
+    /**
+     * To be used in test cases only!
+     */
+    public static synchronized  void reset() {
+        WACContext = null;
     }
 
     private static void assertInitialized() {

@@ -59,7 +59,7 @@ class RequirementsTest {
     @Test
     public void addRequirement_custom() {
         Requirements requirements = new Requirements();
-        requirements.addRequirement(() -> "TEST_REQUIREMENT");
+        requirements.addRequirement(new Requirement("TEST_REQUIREMENT") {});
 
         assertTrue(requirements.hasRequirements());
         Requirement requirement = requirements.getNextRequirement();

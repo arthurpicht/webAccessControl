@@ -4,9 +4,9 @@ import de.arthurpicht.webAccessControl.WACContext;
 import de.arthurpicht.webAccessControl.WACContextRegistry;
 import de.arthurpicht.webAccessControl._integrationTest.globalStubs.HttpServletRequestStub;
 import de.arthurpicht.webAccessControl._integrationTest.globalStubs.SessionManagerStubAbstractFactory;
+import de.arthurpicht.webAccessControl._integrationTest.loginHandler.LoginHandlerStubIntermediateFactory;
 import de.arthurpicht.webAccessControl._integrationTest.roles.RoleA;
 import de.arthurpicht.webAccessControl._integrationTest.roles.RoleB;
-import de.arthurpicht.webAccessControl._integrationTest.loginHandler.LoginHandlerStubIntermediateFactory;
 import de.arthurpicht.webAccessControl.auth.Authorization;
 import de.arthurpicht.webAccessControl.auth.UnauthorizedException;
 import de.arthurpicht.webAccessControl.handler.LoginHandler;
@@ -30,6 +30,8 @@ public class AuthorizationIntermediateTest {
 
     @BeforeAll
     public static void init() throws UnauthorizedException {
+        WACContextRegistry.reset();
+
         Logger logger = LoggerFactory.getLogger("IntegrationTest");
         RoleRegistry roleRegistry = new RoleRegistry.Builder()
                 .add(RoleA.ROLE_NAME, RoleA.class)
@@ -42,7 +44,6 @@ public class AuthorizationIntermediateTest {
                 new LoginHandlerStubIntermediateFactory(),
                 new SessionManagerStubAbstractFactory()
         );
-
         WACContextRegistry.initialize(context);
 
         SessionManager sessionManager = WACContextRegistry.getContext().getSessionManager();

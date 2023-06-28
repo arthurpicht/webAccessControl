@@ -2,7 +2,6 @@ package de.arthurpicht.webAccessControl.sessionManager;
 
 import de.arthurpicht.webAccessControl.helper.HttpSessions;
 import de.arthurpicht.webAccessControl.securityAttribute.SecurityAttribute;
-import de.arthurpicht.webAccessControl.securityAttribute.User;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;

@@ -28,6 +28,7 @@ public class AuthorizationValidTest {
 
     @BeforeAll
     public static void init() throws UnauthorizedException {
+        WACContextRegistry.reset();
         Logger logger = LoggerFactory.getLogger("IntegrationTest");
         RoleRegistry roleRegistry = new RoleRegistry.Builder()
                 .add(RoleA.ROLE_NAME, RoleA.class)
