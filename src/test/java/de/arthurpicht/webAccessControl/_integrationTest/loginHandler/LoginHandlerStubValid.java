@@ -1,7 +1,6 @@
 package de.arthurpicht.webAccessControl._integrationTest.loginHandler;
 
 import de.arthurpicht.webAccessControl._integrationTest.roles.RoleA;
-import de.arthurpicht.webAccessControl.auth.UnauthorizedException;
 import de.arthurpicht.webAccessControl.handler.LoginHandler;
 import de.arthurpicht.webAccessControl.securityAttribute.SecurityAttribute;
 import de.arthurpicht.webAccessControl.securityAttribute.User;
@@ -10,7 +9,7 @@ import de.arthurpicht.webAccessControl.securityAttribute.requirements.Requiremen
 public class LoginHandlerStubValid extends LoginHandler {
 
     @Override
-    public SecurityAttribute checkCredentials(String username, char[] password) throws UnauthorizedException {
+    public SecurityAttribute checkCredentials(String username, char[] password) {
         User user = new RoleA("test-user-1");
         Requirements requirements = new Requirements();
 
@@ -18,7 +17,7 @@ public class LoginHandlerStubValid extends LoginHandler {
     }
 
     @Override
-    public SecurityAttribute checkCredentials(String accessKey) throws UnauthorizedException {
+    public SecurityAttribute checkCredentials(String accessKey) {
         throw new RuntimeException("Intentionally not implemented.");
     }
 

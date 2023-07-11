@@ -13,7 +13,7 @@ import java.util.Set;
 
 import static de.arthurpicht.utils.core.assertion.MethodPreconditions.assertArgumentNotNull;
 
-@SuppressWarnings("unused")
+@SuppressWarnings({"unused", "UnusedReturnValue"})
 public class AccessControl {
 
     private static final Logger authLogger = WACContextRegistry.getContext().getLogger();
